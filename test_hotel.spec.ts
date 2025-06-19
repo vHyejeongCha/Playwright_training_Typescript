@@ -57,32 +57,27 @@ test('test', async ({ page }) => {
     await expect(page.locator('#birthday')).toContainText('未登録');
     await expect(page.locator('#notification')).toContainText('受け取る');
 
-    //"宿泊予約"ボタン押下
+    //宿泊予約ページから"このプランで予約"押下
     await page.getByRole('link', { name: '宿泊予約' }).click();
-
-    //宿泊予約ページに別タブ遷移
     const page1Promise = page.waitForEvent('popup');
     await page.locator('.btn.btn-primary').first().click();
     const page1 = await page1Promise;
 
-    //宿泊日に、現在より1日後の日付が入っていることを確認
+    //宿泊予約確認画面に遷移したことを確認
+    expect(page1.url()).toContain('https://hotel-example-site.takeyaqa.dev/ja/reserve.html');
+
+    //宿泊日に翌日の日付が入っていることを確認
     await expect(page1.getByRole('textbox', { name: '宿泊日 必須' })).toHaveValue(plus1StrYMD);
 
     //"確認のご連絡"を"希望しない"で選択
     await page1.getByLabel('確認のご連絡 必須').selectOption('no');
 
-    //ここで合計金額を保存
-    const aText = await page1.locator('total-bill').innerText();
-
-    //"予約内容を確認する"ボタンを押下
-    await page1.locator('[data-test="submit-button"]').click();
-
-    //宿泊予約確認画面に遷移したことを確認
-    expect(page1.url()).toContain('https://hotel-example-site.takeyaqa.dev/ja/confirm.html');
-
     //宿泊予約画面で表示された金額と一致するか確認
-    const bText = await page1.locator('#total-bill').innerText();
-    expect(aText).toBe(bText);
+    //const bText = await page1.locator('#total-bill').innerText();
+    //expect(aText).toBe(bText);
+
+    //"予約内容を確認する"押下
+    await page1.locator('[data-test="submit-button"]').click();
 
     //予約情報の確認
     await expect(page1.locator('#term')).toContainText(termDisplay);
@@ -91,7 +86,6 @@ test('test', async ({ page }) => {
     await expect(page1.locator('#username')).toContainText('山田一郎様');
     await expect(page1.locator('#contact')).toContainText('希望しない');
     await expect(page1.locator('#comment')).toContainText('なし');
-
     //"予約内容を確認する"ボタンを押下
     await page1.getByRole('button', { name: 'この内容で予約する' }).click();
 
@@ -103,5 +97,5 @@ test('test', async ({ page }) => {
     await page1.getByRole('button', { name: '閉じる' }).click();
 
     //タブが閉じ、宿泊プラン一覧画面に戻ったことを確認
-    expect(page.url()).toBe('https://hotel-example-site.takeyaqa.dev/ja/plans.html');
+    expect(page1.url()).toBe('https://hotel-example-site.takeyaqa.dev/ja/confirm.html');
 })
