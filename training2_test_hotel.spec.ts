@@ -1,5 +1,6 @@
 import { test, expect } from '@playwright/test';
 
+//翌月1日をYYYY/MM/DD形式で保存
 function getNextMonthFirstDay(): string {
     const today = new Date();
     const year = today.getMonth() === 11 ? today.getFullYear() + 1 : today.getFullYear();
@@ -42,10 +43,10 @@ test('test', async ({ page }) => {
     //確認のご連絡は"希望しない"を選択
     await page.getByLabel('確認のご連絡 必須').selectOption('no');
 
-    //(確認用)スクリーンショット取得
-    await page.screenshot({ path: 'screenshot/screenshot1.png' });
-    await page.evaluate(() => window.scrollTo(0, document.body.scrollHeight));
-    await page.screenshot({ path: 'screenshot/screenshot2.png' });
+        //(確認用)スクリーンショット取得
+        await page.screenshot({ path: 'screenshot/screenshot1.png' });
+        await page.evaluate(() => window.scrollTo(0, document.body.scrollHeight));
+        await page.screenshot({ path: 'screenshot/screenshot2.png' });
 
     //"予約内容を確認する"ボタンクリック
     await page.locator('[data-test="submit-button"]').click();
