@@ -1,0 +1,8 @@
+{
+    "compilerOptions": {
+    "moduleResolution": "node",
+    "module": "commonjs", // または "esnext"
+    "esModuleInterop": true,  // これもあると良い
+    "allowSyntheticDefaultImports": true
+    }
+}

@@ -1,4 +1,5 @@
 import { expect, type Locator, type Page } from '@playwright/test';
+
 export class DatePageObject {
   // 今日より1日前の日付 (YYYY/MM/DD)
     getYesterdayYMD(): string {

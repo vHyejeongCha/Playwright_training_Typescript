@@ -1,0 +1,5 @@
+case_no,mailaddress,password,date,term,head-count,contact,name
+"no1","ichiro@example.com","password","2025/07/28","2","2","希望しない","山田一郎"
+"no2","sakura@example.com","pass1234","2025/07/21","1","2","希望しない","松本さくら"
+"no3","jun@example.com","pa55w0rd!","2025/07/28","2","2","メールでのご連絡","林潤"
+"no4","yoshiki@example.com","pass-pass","2025/07/28","2","2","電話でのご連絡","木村良樹"
